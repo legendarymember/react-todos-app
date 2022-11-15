@@ -6,14 +6,9 @@ import { useDispatch } from 'react-redux';
 import { addTodoAsync } from '../apiActions/todosApiActions';
 import { AddTodoModal } from './addTodoModal';
 import { useSelector } from 'react-redux';
-import {
-  filterAndSortByStatus,
-  selectTodosByStatus,
-  updateTodo
-} from '../slices/todoSlice';
-import { DraggableLists } from '../../common/components/draggableLists';
-import { List } from '../../common/components/list';
-import TodoCard from './todoCard';
+import { filterAndSortByStatus, updateTodo } from '../slices/todoSlice';
+import { DraggableList } from '../../common/components/draggableList';
+import { TodosList } from '../components/todosList';
 
 const StyledTodoListsContainer = styled.div`
   display: flex;
@@ -64,19 +59,11 @@ export function TodosDashboard() {
         </Button>
       </StyledButtonContainer>
       <StyledTodoListsContainer>
-        <DraggableLists
-          getListKeys={() => Object.keys(STATUS).map((s) => STATUS[s])}
-          getListItems={(status) =>
-            useSelector((state) => selectTodosByStatus(state, status))
-          }
-          renderList={(status, todos, renderItem) => (
-            <List items={todos} title={status}>
-              {(todo, index) => renderItem(todo, todo.id, index)}
-            </List>
-          )}
-          renderItem={(todo) => <TodoCard key={todo.id} todo={todo}></TodoCard>}
-          onDrag={onDragEnd}
-        ></DraggableLists>
+        <DraggableList.Context onDrag={onDragEnd}>
+          {Object.keys(STATUS).map((s) => (
+            <TodosList key={s} status={STATUS[s]}></TodosList>
+          ))}
+        </DraggableList.Context>
       </StyledTodoListsContainer>
       <AddTodoModal
         show={modalOpen}

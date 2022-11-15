@@ -20,7 +20,7 @@ export const TODOS = [
   {
     id: 1,
     createdDate: addDayToCurrentDate(0),
-    status: STATUS.Pending,
+    status: STATUS.InProgress,
     title: 'Finish homework'
   },
   {
