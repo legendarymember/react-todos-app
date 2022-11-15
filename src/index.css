@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  font-family: 'Hussar';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #ccdbdc;
+}
+
+html, body, #root {
+  margin: 0;
+  height: 100%;
+}
+
+code {
+  font-family: 'Hussar';
+}
+
+@font-face {
+  font-family: Hussar;
+  src: url("../public/HussarBoldWebEdition.otf") format("opentype");
+}
