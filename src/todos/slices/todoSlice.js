@@ -56,13 +56,5 @@ const todoSlice = createSlice({
   }
 });
 
-export const selectTodosByStatus = (state, status) =>
-  filterAndSortByStatus(state.todo.todos, status);
-
-export const filterAndSortByStatus = (todos, status) =>
-  todos
-    .filter((t) => t.status === status)
-    .sort((a, b) => a.createdDate - b.createdDate);
-
 export const { selectTodos, updateTodo } = todoSlice.actions;
 export default todoSlice.reducer;

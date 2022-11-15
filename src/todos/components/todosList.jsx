@@ -2,16 +2,18 @@ import styled from 'styled-components';
 import TodoCard from './todoCard';
 import { DraggableList } from '../../common/components/draggableList';
 import { ListContainer } from '../../common/components/listContainer';
-import { selectTodosByStatus } from '../slices/todoSlice';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { filterAndSortByStatus } from '../utils/todosUtils';
 
 const StyledListItemContainer = styled.div`
   margin-bottom: 20px;
 `;
 
 export function TodosList({ status }) {
-  const todos = useSelector((state) => selectTodosByStatus(state, status));
+  const todos = useSelector((state) =>
+    filterAndSortByStatus(state.todo.todos, status)
+  );
 
   return (
     <ListContainer title={status}>

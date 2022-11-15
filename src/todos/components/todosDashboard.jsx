@@ -6,9 +6,10 @@ import { useDispatch } from 'react-redux';
 import { addTodoAsync } from '../apiActions/todosApiActions';
 import { AddTodoModal } from './addTodoModal';
 import { useSelector } from 'react-redux';
-import { filterAndSortByStatus, updateTodo } from '../slices/todoSlice';
+import { updateTodo } from '../slices/todoSlice';
 import { DraggableList } from '../../common/components/draggableList';
 import { TodosList } from '../components/todosList';
+import { filterAndSortByStatus } from '../utils/todosUtils';
 
 const StyledTodoListsContainer = styled.div`
   display: flex;
