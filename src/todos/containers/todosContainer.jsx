@@ -5,7 +5,7 @@ import { Loader } from '../../common/components/loader';
 import { loadTodosAsync } from '../apiActions/todosApiActions';
 import { TodosDashboard } from '../components/todosDashboard';
 
-const TodosPageContainer = styled.div`
+const StyledTodosPageContainer = styled.div`
   padding: 30px 70px;
   height: 100%;
 `;
@@ -19,8 +19,8 @@ export function TodosPage() {
   }, []);
 
   return (
-    <TodosPageContainer>
+    <StyledTodosPageContainer>
       {isLoading ? <Loader></Loader> : <TodosDashboard></TodosDashboard>}
-    </TodosPageContainer>
+    </StyledTodosPageContainer>
   );
 }

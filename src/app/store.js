@@ -16,6 +16,5 @@ const reducer = combineReducers({
 export default configureStore({
   reducer: reducer,
   initialState: initialState,
-  middleware: [thunk],
-  devTools: true
+  middleware: [thunk]
 });

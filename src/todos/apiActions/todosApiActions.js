@@ -1,21 +1,12 @@
-import {
-  addTodoLoading,
-  addTodoSuccess,
-  loadTodosLoading,
-  loadTodosSuccess
-} from '../slices/todoSlice';
 import { TODOS } from '../constants/todoMocks';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const loadTodosAsync = () => async (dispatch) => {
-  dispatch(loadTodosLoading());
+export const loadTodosAsync = createAsyncThunk('loadTodos', async () => {
   await new Promise((resolve) => setTimeout(resolve, 2000));
+  return TODOS;
+});
 
-  dispatch(loadTodosSuccess(TODOS));
-};
-
-export const addTodosAsync = (title) => async (dispatch) => {
-  dispatch(addTodoLoading());
+export const addTodoAsync = createAsyncThunk('addTodo', async (title) => {
   await new Promise((resolve) => setTimeout(resolve, 500));
-
-  dispatch(addTodoSuccess(title));
-};
+  return title;
+});

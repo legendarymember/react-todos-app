@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addTodoAsync, loadTodosAsync } from '../apiActions/todosApiActions';
 import { STATUS } from '../constants/todoMocks';
 
 const DEFAULT_ERROR_MESSAGE = 'Error occured. Try again later.';
@@ -8,21 +9,31 @@ const todoSlice = createSlice({
   name: 'todo',
   initialState,
   reducers: {
-    loadTodosLoading(state) {
+    updateTodo(state, action) {
+      const index = state.todos.findIndex((el) => el.id === action.payload.id);
+      state.todos.splice(index, 1, action.payload);
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(loadTodosAsync.pending, (state) => {
       state.isLoading = true;
-    },
-    loadTodosSuccess(state, action) {
-      state.isLoading = false;
-      state.todos = action.payload;
-    },
-    loadTodosError(state, action) {
+    });
+
+    builder.addCase(loadTodosAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload || DEFAULT_ERROR_MESSAGE;
-    },
-    addTodoLoading(state) {
+    });
+
+    builder.addCase(loadTodosAsync.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.todos = action.payload;
+    });
+
+    builder.addCase(addTodoAsync.pending, (state) => {
       state.isLoading = true;
-    },
-    addTodoSuccess(state, action) {
+    });
+
+    builder.addCase(addTodoAsync.fulfilled, (state, action) => {
       state.isLoading = false;
       state.todos.push({
         id:
@@ -36,15 +47,12 @@ const todoSlice = createSlice({
         status: STATUS.Pending,
         title: action.payload
       });
-    },
-    addTodoError(state, action) {
+    });
+
+    builder.addCase(addTodoAsync.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload || DEFAULT_ERROR_MESSAGE;
-    },
-    updateTodo(state, action) {
-      const index = state.todos.findIndex((el) => el.id === action.payload.id);
-      state.todos.splice(index, 1, action.payload);
-    }
+    });
   }
 });
 
@@ -56,14 +64,5 @@ export const filterAndSortByStatus = (todos, status) =>
     .filter((t) => t.status === status)
     .sort((a, b) => a.createdDate - b.createdDate);
 
-export const {
-  loadTodosLoading,
-  loadTodosSuccess,
-  loadTodosError,
-  addTodoLoading,
-  addTodoSuccess,
-  addTodoError,
-  selectTodos,
-  updateTodo
-} = todoSlice.actions;
+export const { selectTodos, updateTodo } = todoSlice.actions;
 export default todoSlice.reducer;

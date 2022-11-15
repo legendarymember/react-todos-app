@@ -1,10 +1,9 @@
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { STATUS } from '../constants/todoMocks';
 import { Button } from 'react-bootstrap';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodosAsync } from '../apiActions/todosApiActions';
-import { buttonStyle } from '../../common/constants/styleConstants';
+import { addTodoAsync } from '../apiActions/todosApiActions';
 import { AddTodoModal } from './addTodoModal';
 import { useSelector } from 'react-redux';
 import {
@@ -16,12 +15,12 @@ import { DraggableLists } from '../../common/components/draggableLists';
 import { List } from '../../common/components/list';
 import TodoCard from './todoCard';
 
-const TodoListsContainer = styled.div`
+const StyledTodoListsContainer = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-const ButtonContainer = styled.div`
+const StyledButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
@@ -30,6 +29,7 @@ const ButtonContainer = styled.div`
 export function TodosDashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const openModal = () => {
     setModalOpen(true);
@@ -40,7 +40,7 @@ export function TodosDashboard() {
   };
 
   const addTodo = (title) => {
-    dispatch(addTodosAsync(title));
+    dispatch(addTodoAsync(title));
   };
 
   const todos = useSelector((state) => state.todo.todos);
@@ -53,17 +53,17 @@ export function TodosDashboard() {
 
   return (
     <>
-      <ButtonContainer>
+      <StyledButtonContainer>
         <Button
           variant="primary"
           size="lg"
-          style={buttonStyle}
+          style={theme.buttonStyle}
           onClick={openModal}
         >
           Add todo
         </Button>
-      </ButtonContainer>
-      <TodoListsContainer>
+      </StyledButtonContainer>
+      <StyledTodoListsContainer>
         <DraggableLists
           getListKeys={() => Object.keys(STATUS).map((s) => STATUS[s])}
           getListItems={(status) =>
@@ -77,7 +77,7 @@ export function TodosDashboard() {
           renderItem={(todo) => <TodoCard key={todo.id} todo={todo}></TodoCard>}
           onDrag={onDragEnd}
         ></DraggableLists>
-      </TodoListsContainer>
+      </StyledTodoListsContainer>
       <AddTodoModal
         show={modalOpen}
         onHide={closeModal}

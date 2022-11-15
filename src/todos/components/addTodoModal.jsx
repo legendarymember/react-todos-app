@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { buttonStyle } from '../../common/constants/styleConstants';
+import { useTheme } from 'styled-components';
 
 export function AddTodoModal(props) {
   const [title, setTitle] = useState('');
   const [validated, setValidated] = useState(false);
 
   const { onAddTodo, ...passThroughtProps } = props;
+
+  const theme = useTheme();
 
   const submitForm = (event) => {
     setValidated(true);
@@ -44,7 +46,7 @@ export function AddTodoModal(props) {
               Close
             </Button>
             <Button
-              style={buttonStyle}
+              style={theme.buttonStyle}
               variant="primary"
               type="submit"
               className="ms-3"
@@ -61,5 +63,6 @@ export function AddTodoModal(props) {
 AddTodoModal.propTypes = {
   onHide: PropTypes.func,
   show: PropTypes.bool.isRequired,
-  onAddTodo: PropTypes.func
+  onAddTodo: PropTypes.func,
+  theme: PropTypes.object
 };

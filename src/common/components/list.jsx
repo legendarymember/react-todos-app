@@ -1,39 +1,38 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors } from '../../common/constants/styleConstants';
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 30px;
 `;
 
-const ListContainer = styled.div`
+const StyledListContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
 `;
 
-const LitTitle = styled.div`
+const StyledListTitle = styled.div`
   font-size: 32px;
   font-weight: bold;
-  color: ${colors.celadonBlue};
+  color: ${(props) => props.theme.primaryBackgroundColor};
 `;
 
 export function List({ items, title, children }) {
   return (
-    <Container>
-      <LitTitle>{title}</LitTitle>
-      <ListContainer>
+    <StyledContainer>
+      <StyledListTitle>{title}</StyledListTitle>
+      <StyledListContainer>
         {items.length > 0 && items.map((el, index) => children(el, index))}
-      </ListContainer>
-    </Container>
+      </StyledListContainer>
+    </StyledContainer>
   );
 }
 
 List.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.array,
+  items: PropTypes.array.isRequired,
   children: PropTypes.func.isRequired
 };

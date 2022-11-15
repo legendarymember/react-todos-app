@@ -4,15 +4,14 @@ import { STATUS } from '../constants/todoMocks';
 import { updateTodo } from '../slices/todoSlice';
 import { connect } from 'react-redux';
 import dayjs from 'dayjs';
-import { colors } from '../../common/constants/styleConstants';
 
-const TodoCardContainer = styled.div`
-  background-color: ${colors.celadonBlue};
+const StyledTodoCardContainer = styled.div`
+  background-color: ${(props) => props.theme.primaryBackgroundColor};
   border-radius: 10px;
   padding: 15px 20px;
 `;
 
-const TextInput = styled.input`
+const StyledTextInput = styled.input`
   outline: none;
   font-weight: bold;
   font-size: 24px;
@@ -21,25 +20,27 @@ const TextInput = styled.input`
   display: inline;
   padding: none;
   width: auto;
-  color: ${colors.gainsboro};
+  color: ${(props) => props.theme.secondaryColor};
   margin-bottom: 10px;
 `;
 
-const DateText = styled.div`
+const StyledDateText = styled.div`
   font-size: 16px;
-  color: ${colors.powderBlue};
+  color: ${(props) => props.theme.primaryColor};
 `;
 
 function TodoCard({ todo, updateTodo }) {
   return (
-    <TodoCardContainer>
-      <TextInput
+    <StyledTodoCardContainer>
+      <StyledTextInput
         type="text"
         value={todo.title}
         onChange={(event) => updateTodo({ ...todo, title: event.target.value })}
-      ></TextInput>
-      <DateText>{dayjs(todo.createdDate).format('MMM D, YYYY')}</DateText>
-    </TodoCardContainer>
+      ></StyledTextInput>
+      <StyledDateText>
+        {dayjs(todo.createdDate).format('MMM D, YYYY')}
+      </StyledDateText>
+    </StyledTodoCardContainer>
   );
 }
 
